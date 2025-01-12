@@ -4,11 +4,11 @@ class Product {
   description;
   price;
 
-  constructor(title, image, description, price) {
+  constructor(title, image, price, description) {
     this.title = title;
     this.imageUrl = image;
-    this.description = description;
     this.price = price;
+    this.description = description;
   }
 }
 
@@ -103,5 +103,10 @@ class Shop {
   }
 }
 
+class App {
+    static init(){
+        new Shop().render();
+    }
+}
 
-new Shop().render();
+App.init();
