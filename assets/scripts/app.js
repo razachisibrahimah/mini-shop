@@ -1,30 +1,37 @@
+class Product {
+  title = "DEFAULT";
+  inageUrl;
+  description;
+  price;
+
+  constructor(title, image, description, price){
+    this.title = title;
+    this.imageUrl = image;
+    this.description = description;
+    this.price = price;
+
+  }
+}
 
 const productList = {
+  products: [
+    new Product("Pillow", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEDn1_8kpGWT5c0FYXkunkX5rEqJ0k2I0cgXFruxsvnUv3F9Mm5r2lC4E&s",
+        20.46, "A soft pillow"
+    ),
+    new Product("Carpet", "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Ardabil_Carpet.jpg/397px-Ardabil_Carpet.jpg",
+        199.46, "Elegant carpet"
+    )
+  ],
 
-    products: [
-        {
-            title: 'Pillow',
-            imageUrl: ' https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEDn1_8kpGWT5c0FYXkunkX5rEqJ0k2I0cgXFruxsvnUv3F9Mm5r2lC4E&s',
-            price: 20.46,
-            description: 'A soft pillow'
-        },
-        {
-            title: 'Carpet',
-            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Ardabil_Carpet.jpg/397px-Ardabil_Carpet.jpg',
-            price: 100.46,
-            description: 'Elegant carpet'
-        },
-    ],
+  render() {
+    const renderHook = document.getElementById("app");
+    const prodList = document.createElement("ul");
+    prodList.className = "product-list";
 
-    render () {
-        const renderHook = document.getElementById('app');
-        const prodList = document.createElement('ul');
-        prodList.className = 'product-list';
-
-        for (const prod of this.products){
-            const prodEl = document.createElement('li');
-            prodEl.className = 'product-item';
-            prodEl.innerHTML = `
+    for (const prod of this.products) {
+      const prodEl = document.createElement("li");
+      prodEl.className = "product-item";
+      prodEl.innerHTML = `
               <div>
               <img  src="${prod.imageUrl}" alt="${prod.title}" >
               <div class="product-item__content">
@@ -34,14 +41,12 @@ const productList = {
                <button>Add to Cart</button>
               </div>
               </div>
-            `
-            prodList.append(prodEl);
-
-        }
-
-        renderHook.append(prodList);
+            `;
+      prodList.append(prodEl);
     }
 
+    renderHook.append(prodList);
+  },
 };
 
 productList.render();
