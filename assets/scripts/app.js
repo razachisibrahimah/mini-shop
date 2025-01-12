@@ -12,34 +12,52 @@ class Product {
   }
 }
 
+class ShoppingCart {
+  items = [];
 
+  addProduct(product){
+    this.items.push(product);
+    this.totalOutput = `<h2>Total: \$${1}</h2>`;
+  }
+
+  renderShoppingItems() {
+    const cartEl = document.createElement("section");
+    cartEl.innerHTML = `
+        <h2>Total: \$${0}</h2>
+        <button>Order Now|</button>
+        `;
+    cartEl.className = "cart";
+    this.totalOutput = cartEl.querySelector('h2');
+    return cartEl;
+  }
+}
 class ProductItem {
-    constructor(product){
-        this.product = product;
-    }
+  constructor(product) {
+    this.product = product;
+  }
 
-    addToCart() {
-        console.log('Added to cart');
-    }
+  addToCart() {
+    console.log("Added to cart");
+  }
 
-    renderItem(){
-        const prodEl = document.createElement("li");
-        prodEl.className = "product-item";
-        prodEl.innerHTML = `
+  renderItem() {
+    const prodEl = document.createElement("li");
+    prodEl.className = "product-item";
+    prodEl.innerHTML = `
                 <div>
-                <img  src="${ this.product.imageUrl}" alt="${ this.product.title}" >
+                <img  src="${this.product.imageUrl}" alt="${this.product.title}" >
                 <div class="product-item__content">
-                 <h2>${ this.product.title}</h2>
-                 <h3>\$${ this.product.price}</h3>
-                 <p>${ this.product.description}</p>
+                 <h2>${this.product.title}</h2>
+                 <h3>\$${this.product.price}</h3>
+                 <p>${this.product.description}</p>
                  <button>Add to Cart</button>
                 </div>
                 </div>
               `;
-              const addCartButton = prodEl.querySelector('button');
-              addCartButton.addEventListener('click', this.addToCart.bind(this));
-              return prodEl;
-    }
+    const addCartButton = prodEl.querySelector("button");
+    addCartButton.addEventListener("click", this.addToCart.bind(this));
+    return prodEl;
+  }
 }
 
 class ProductList {
@@ -61,7 +79,6 @@ class ProductList {
   constructor() {}
 
   render() {
-    const renderHook = document.getElementById("app");
     const prodList = document.createElement("ul");
     prodList.className = "product-list";
 
@@ -70,11 +87,21 @@ class ProductList {
       const productElement = productItem.renderItem();
       prodList.append(productElement);
     }
-
-    renderHook.append(prodList);
+    return prodList;
   }
 }
 
-const productList = new ProductList();
+class Shop {
+  render() {
+    const renderHook = document.getElementById("app");
+    const cart = new ShoppingCart();
+    const cartElement = cart.renderShoppingItems();
+    const productList = new ProductList();
+    const prodListElement = productList.render();
+    renderHook.append(cartElement);
+    renderHook.append(prodListElement);
+  }
+}
 
-productList.render();
+
+new Shop().render();
